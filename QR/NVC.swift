@@ -33,7 +33,6 @@ class NVC: UINavigationController {
         let vc = segue.destination as! VC
         vOrigen.sesion?.stopRunning()
         vc.urls = vOrigen.urls
-        
     }
     
 

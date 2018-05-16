@@ -11,15 +11,15 @@ import WebKit
 
 class VC: UIViewController {
 
-    @IBOutlet weak var direccionURL: UILabel!
+    
     @IBOutlet weak var visorWeb: UIWebView!
     var urls : String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        direccionURL.text = self.urls
         
+        self.title = self.urls
         if let url = URL(string: self.urls!) {
             let request = URLRequest(url: url)
             visorWeb.loadRequest(request)

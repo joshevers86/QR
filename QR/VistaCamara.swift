@@ -20,10 +20,14 @@ class VistaCamara: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         // Do any additional setup after loading the view, typically from a nib.
         //Esto es para eliminar en el boton de retorno el texto Back
         self.title = "QR Principal"
+        
+        
         let dispositivo = AVCaptureDevice.default(for: AVMediaType.video)
         do {
+            
             let entrada = try AVCaptureDeviceInput(device: dispositivo!)
             sesion = AVCaptureSession()
+            sesion?.sessionPreset = AVCaptureSession.Preset.photo
             sesion?.addInput(entrada)
             
             let metaDatos = AVCaptureMetadataOutput()
@@ -31,11 +35,9 @@ class VistaCamara: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
             metaDatos.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
             metaDatos.metadataObjectTypes = [.qr]
             capa = AVCaptureVideoPreviewLayer(session: sesion!)
-            //Esto es para que respete el acpeto de la camara
+            capa?.frame = view.layer.bounds
             capa?.videoGravity = AVLayerVideoGravity.resizeAspectFill
             capa?.connection?.videoOrientation = AVCaptureVideoOrientation.portrait
-            //se establece el tamaño de toda la vista que lo contiene
-            capa?.frame = view.layer.bounds
             //agregar la capa de la vista
             view.layer.addSublayer(capa!)
             marcoQR = UIView()
@@ -82,6 +84,10 @@ class VistaCamara: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
    override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
     }
 }
 
